@@ -5,7 +5,7 @@
 %<*readme>
 ____________________
 The XePersian package
-v21.7
+v21.8
 
 The xepersian package provides a convenient interface for 
 typesetting Persian and English texts in LaTeX, using XeTeX 
@@ -51,7 +51,7 @@ mailing list whenever I have time. You can subscribe to the mailing list at
   <http://tug.org/mailman/listinfo/persiantex>
   
 
-Current version release date: 2018/10/08
+Current version release date: 2018/11/23
 ______________
 Vafa Khalighi
 persian-tex@tug.org
@@ -118,6 +118,7 @@ by Vafa Khalighi.
 \generate{\file{extrafootnotefeatures-xepersian.def}{\from{\jobname.dtx}{table,extrafootnotefeatures-xepersian.def}}}
 \generate{\file{extreport-xepersian.def}{\from{\jobname.dtx}{table,extreport-xepersian.def}}}
 \generate{\file{fancyref-xepersian.def}{\from{\jobname.dtx}{table,fancyref-xepersian.def}}}
+\generate{\file{fontspec-xepersian.def}{\from{\jobname.dtx}{table,fontspec-xepersian.def}}}
 \generate{\file{footnote-xepersian.def}{\from{\jobname.dtx}{table,footnote-xepersian.def}}}
 \generate{\file{framed-xepersian.def}{\from{\jobname.dtx}{table,framed-xepersian.def}}}
 \generate{\file{glossaries-xepersian.def}{\from{\jobname.dtx}{table,glossaries-xepersian.def}}}
@@ -180,7 +181,7 @@ by Vafa Khalighi.
 \documentclass{ltxdoc}
 \input{xepersian-doc-preamble.ltx}
 \hypersetup{%
-  pdftitle={Source documentation for version 21.7 of the XePersian
+  pdftitle={Source documentation for version 21.8 of the XePersian
                 package}%
 }
 \EnableCrossrefs
@@ -199,7 +200,7 @@ by Vafa Khalighi.
 % \GetFileInfo{\jobname.dtx}
 % \title{\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}\\
 %\LARGE Persian for \LaTeXe, using {\XeTeX} engine\\[5pt]
-%\large Source documentation for \textcolor{blue!65!black}{version 21.7}}
+%\large Source documentation for \textcolor{blue!65!black}{version 21.8}}
 % \author{Vafa Khalighi\\
 %  \url{persian-tex@tug.org}}
 %\setcounter{page}{0}
@@ -210,7 +211,7 @@ by Vafa Khalighi.
 %\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}
 %
 %\Large
-%Source documentation for \textcolor{blue!65!black}{version 21.7}}
+%Source documentation for \textcolor{blue!65!black}{version 21.8}}
 %
 %\vskip 0pt plus 3fill
 %\textit{\large to my Master, \textbf{Ferdowsi The Great}}
@@ -279,7 +280,7 @@ by Vafa Khalighi.
 %\iffalse
 %<*table>
 %\fi
-%% \CheckSum{10809}
+%% \CheckSum{10898}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -1961,6 +1962,61 @@ by Vafa Khalighi.
 %    \end{macrocode}
 % \iffalse
 %</fancyref-xepersian.def>
+%<*fontspec-xepersian.def>
+%\fi
+% \section{File \texttt{fontspec-xepersian.def}}
+%    \begin{macrocode}
+\ProvidesFile{fontspec-xepersian.def}[2018/11/23 v0.1 fontspec changes]
+\ExplSyntaxOn
+\cs_new:Npn \__xepersian_error:nx    { \msg_error:nnx    {xepersian} }
+\char_set_catcode_space:n {32}
+\cs_new:Nn \__xepersian_msg_new:nnnn
+  { \msg_new:nnxx {#1} {#2} { \tl_trim_spaces:n {#3} } { \tl_trim_spaces:n {#4} } }
+\__xepersian_msg_new:nnnn {xepersian} {font-cannot-be-loaded}
+ {
+  The font "#1" cannot be loaded by the xepersian package.
+ }
+ {
+  Select another font and rerun "xelatex".
+ }
+\char_set_catcode_ignore:n {32}
+\prg_set_conditional:Nnn \__xepersian_font_if_cannot_be_loaded:N {p,TF,T,F}
+  {
+    \str_if_in:NnTF { #1 } { HM }
+    {
+      \prg_return_true:
+    }
+    {
+      \prg_return_false:
+    }
+  }
+\cs_undefine:N \__fontspec_load_font:
+\cs_new:Nn \__fontspec_load_font:
+ {
+  \__fontspec_primitive_font_set:Nnn \l_fontspec_font
+     { \__fontspec_construct_font_call:nn { \l__fontspec_fontname_up_tl } {} } {\f@size pt}
+  \__fontspec_primitive_font_if_null:NT \l_fontspec_font { \__fontspec_error:nx {font-not-found} {\l__fontspec_fontname_up_tl} }
+  \__xepersian_font_if_cannot_be_loaded:NT \l__fontspec_fontname_up_tl { \__xepersian_error:nx {font-cannot-be-loaded} {\l__fontspec_fontname_up_tl} }
+  \__fontspec_set_font_type:N \l_fontspec_font
+  \__fontspec_primitive_font_gset:Nnn \l_fontspec_font
+     { \__fontspec_construct_font_call:nn { \l__fontspec_fontname_up_tl } {} } {\f@size pt}
+  \l_fontspec_font % this is necessary for LuaLaTeX to check the scripts properly
+ }
+\cs_undefine:N \__fontspec_load_fontname:n
+\cs_new:Nn \__fontspec_load_fontname:n
+ {
+    \__fontspec_load_external_fontoptions:Nn \l_fontspec_fontname_tl {#1}
+    \prop_get:NVNF \g__fontspec_fontopts_prop \l_fontspec_fontname_tl \l__fontspec_fontopts_clist
+     { \clist_clear:N \l__fontspec_fontopts_clist }
+    \keys_set_groups:nnV {fontspec/fontname} {getfontname} \l__fontspec_fontopts_clist
+    \__fontspec_primitive_font_set:Nnn \l_fontspec_font { \__fontspec_construct_font_call:nn {\l_fontspec_fontname_tl} {} } {\f@size pt}
+    \__fontspec_primitive_font_if_null:NT \l_fontspec_font { \__fontspec_error:nx {font-not-found} {#1} }
+  \__xepersian_font_if_cannot_be_loaded:NT #1 { \__xepersian_error:nx {font-cannot-be-loaded} {#1} }
+ }
+\ExplSyntaxOff
+%    \end{macrocode}
+% \iffalse
+%</fontspec-xepersian.def>
 %<*footnote-xepersian.def>
 %\fi
 % \section{File \texttt{footnote-xepersian.def}}
@@ -3427,8 +3483,8 @@ U+003E U+003E <> U+00BB ; >> -> RIGHT POINTING GUILLEMET
 % \section{File \texttt{xepersian.sty}}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\def\xepersian@version{21.7}
-\def\xepersiandate{2018/10/08}
+\def\xepersian@version{21.8}
+\def\xepersiandate{2018/11/23}
 \ProvidesPackage{xepersian}[\xepersiandate\space v\xepersian@version\space 
 Persian typesetting in XeLaTeX]
 \RequirePackage{fontspec}
@@ -4229,7 +4285,7 @@ Persian typesetting in XeLaTeX]
 
 \newcommand*{\@xepersian@pdfcustomproperties}{%
   This is the xepersian package, Version \xepersian@version,
-  Released October 8, 2018. 
+  Released November 23, 2018. 
 }
 
 \newcommand\twocolumnstableofcontents{%
@@ -4835,8 +4891,18 @@ number is 999,999,999.}%
     \@bidi@perpage@footnotefalse
   \fi}
 
+\ExplSyntaxOn
+\bool_new:N \l__xepersian_fontsloadable_bool
+\define@choicekey{xepersian.sty}{fontsloadable}[\xepersian@tempa\xepersian@tempb]{true,false}[true]{%
+  \ifcase\xepersian@tempb\relax
+    \bool_set_true:N \l__xepersian_fontsloadable_bool
+  \or
+    \bool_set_false:N \l__xepersian_fontsloadable_bool
+  \fi}
+\ExplSyntaxOff
 
 \ExecuteOptionsX{%
+    fontsloadable=false,
     documentdirection=righttoleft,
     tabledirection=righttoleft,
     script=nonlatin,
@@ -4854,9 +4920,16 @@ number is 999,999,999.}%
 \ProcessOptionsX
 
 \if@extrafootnotefeatures
-  \input{extrafootnotefeatures-xetex-bidi.def}
-  \input{extrafootnotefeatures-xepersian.def}
+  \input{extrafootnotefeatures-xetex-bidi.def}%
+  \input{extrafootnotefeatures-xepersian.def}%
 \fi
+
+\ExplSyntaxOn
+\bool_if:NF \l__xepersian_fontsloadable_bool
+  {
+    \input{fontspec-xepersian.def}%  
+  }
+\ExplSyntaxOff
 
 \bidi@patchcmd{\set@fontsize}{\@tempdimb#2pt}{%
   \@tempdimb\xepersian@@fontsize@scale\dimexpr#2pt\relax
