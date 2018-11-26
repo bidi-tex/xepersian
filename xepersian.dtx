@@ -5,7 +5,7 @@
 %<*readme>
 ____________________
 The XePersian package
-v21.8
+v21.9
 
 The xepersian package provides a convenient interface for 
 typesetting Persian and English texts in LaTeX, using XeTeX 
@@ -51,7 +51,7 @@ mailing list whenever I have time. You can subscribe to the mailing list at
   <http://tug.org/mailman/listinfo/persiantex>
   
 
-Current version release date: 2018/11/23
+Current version release date: 2018/11/26
 ______________
 Vafa Khalighi
 persian-tex@tug.org
@@ -181,7 +181,7 @@ by Vafa Khalighi.
 \documentclass{ltxdoc}
 \input{xepersian-doc-preamble.ltx}
 \hypersetup{%
-  pdftitle={Source documentation for version 21.8 of the XePersian
+  pdftitle={Source documentation for version 21.9 of the XePersian
                 package}%
 }
 \EnableCrossrefs
@@ -200,7 +200,7 @@ by Vafa Khalighi.
 % \GetFileInfo{\jobname.dtx}
 % \title{\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}\\
 %\LARGE Persian for \LaTeXe, using {\XeTeX} engine\\[5pt]
-%\large Source documentation for \textcolor{blue!65!black}{version 21.8}}
+%\large Source documentation for \textcolor{blue!65!black}{version 21.9}}
 % \author{Vafa Khalighi\\
 %  \url{persian-tex@tug.org}}
 %\setcounter{page}{0}
@@ -211,7 +211,7 @@ by Vafa Khalighi.
 %\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}
 %
 %\Large
-%Source documentation for \textcolor{blue!65!black}{version 21.8}}
+%Source documentation for \textcolor{blue!65!black}{version 21.9}}
 %
 %\vskip 0pt plus 3fill
 %\textit{\large to my Master, \textbf{Ferdowsi The Great}}
@@ -280,7 +280,7 @@ by Vafa Khalighi.
 %\iffalse
 %<*table>
 %\fi
-%% \CheckSum{10898}
+%% \CheckSum{10904}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -1966,7 +1966,7 @@ by Vafa Khalighi.
 %\fi
 % \section{File \texttt{fontspec-xepersian.def}}
 %    \begin{macrocode}
-\ProvidesFile{fontspec-xepersian.def}[2018/11/23 v0.1 fontspec changes]
+\ProvidesFile{fontspec-xepersian.def}[2018/11/26 v0.2 fontspec changes]
 \ExplSyntaxOn
 \cs_new:Npn \__xepersian_error:nx    { \msg_error:nnx    {xepersian} }
 \char_set_catcode_space:n {32}
@@ -1980,9 +1980,9 @@ by Vafa Khalighi.
   Select another font and rerun "xelatex".
  }
 \char_set_catcode_ignore:n {32}
-\prg_set_conditional:Nnn \__xepersian_font_if_cannot_be_loaded:N {p,TF,T,F}
+\prg_set_conditional:Nnn \__xepersian_font_if_cannot_be_loaded:Nn {p,TF,T,F}
   {
-    \str_if_in:NnTF { #1 } { HM }
+    \str_if_in:NnTF { #1 } { #2 }
     {
       \prg_return_true:
     }
@@ -1996,7 +1996,11 @@ by Vafa Khalighi.
   \__fontspec_primitive_font_set:Nnn \l_fontspec_font
      { \__fontspec_construct_font_call:nn { \l__fontspec_fontname_up_tl } {} } {\f@size pt}
   \__fontspec_primitive_font_if_null:NT \l_fontspec_font { \__fontspec_error:nx {font-not-found} {\l__fontspec_fontname_up_tl} }
-  \__xepersian_font_if_cannot_be_loaded:NT \l__fontspec_fontname_up_tl { \__xepersian_error:nx {font-cannot-be-loaded} {\l__fontspec_fontname_up_tl} }
+  \__xepersian_font_if_cannot_be_loaded:NnT \l__fontspec_fontname_up_tl { HM } 
+  { 
+    \__xepersian_error:nx {font-cannot-be-loaded} {\l__fontspec_fontname_up_tl} 
+    \cs_gset_eq:NN \l__fontspec_fontname_up_tl \tex_nullfont:D
+  }
   \__fontspec_set_font_type:N \l_fontspec_font
   \__fontspec_primitive_font_gset:Nnn \l_fontspec_font
      { \__fontspec_construct_font_call:nn { \l__fontspec_fontname_up_tl } {} } {\f@size pt}
@@ -2011,7 +2015,11 @@ by Vafa Khalighi.
     \keys_set_groups:nnV {fontspec/fontname} {getfontname} \l__fontspec_fontopts_clist
     \__fontspec_primitive_font_set:Nnn \l_fontspec_font { \__fontspec_construct_font_call:nn {\l_fontspec_fontname_tl} {} } {\f@size pt}
     \__fontspec_primitive_font_if_null:NT \l_fontspec_font { \__fontspec_error:nx {font-not-found} {#1} }
-  \__xepersian_font_if_cannot_be_loaded:NT #1 { \__xepersian_error:nx {font-cannot-be-loaded} {#1} }
+  \__xepersian_font_if_cannot_be_loaded:NnT #1 { HM } 
+  { 
+    \__xepersian_error:nx {font-cannot-be-loaded} {#1} 
+    \cs_gset_eq:NN \l_fontspec_font \tex_nullfont:D
+  }
  }
 \ExplSyntaxOff
 %    \end{macrocode}
@@ -3483,8 +3491,8 @@ U+003E U+003E <> U+00BB ; >> -> RIGHT POINTING GUILLEMET
 % \section{File \texttt{xepersian.sty}}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\def\xepersian@version{21.8}
-\def\xepersiandate{2018/11/23}
+\def\xepersian@version{21.9}
+\def\xepersiandate{2018/11/26}
 \ProvidesPackage{xepersian}[\xepersiandate\space v\xepersian@version\space 
 Persian typesetting in XeLaTeX]
 \RequirePackage{fontspec}
@@ -4285,7 +4293,7 @@ Persian typesetting in XeLaTeX]
 
 \newcommand*{\@xepersian@pdfcustomproperties}{%
   This is the xepersian package, Version \xepersian@version,
-  Released November 23, 2018. 
+  Released November 26, 2018. 
 }
 
 \newcommand\twocolumnstableofcontents{%
