@@ -1980,7 +1980,7 @@ by Vafa Khalighi.
   Select another font and rerun "xelatex".
  }
 \char_set_catcode_ignore:n {32}
-\prg_set_conditional:Nnn \__xepersian_font_if_cannot_be_loaded:Nn {p,TF,T,F}
+\prg_new_conditional:Nnn \__xepersian_font_if_cannot_be_loaded:Nn {p,TF,T,F}
   {
     \str_if_in:NnTF { #1 } { #2 }
     {
