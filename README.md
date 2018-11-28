@@ -14,7 +14,7 @@ Issues may be entered here.
 
 The files here should match the files on CTAN:
 
-https://www.ctan.org/macros/xetex/latex/bidi.zip
+http://mirrors.ctan.org/macros/xetex/latex/bidi.zip
 
 
 This git repository was originally cloned from:
