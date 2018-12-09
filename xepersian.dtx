@@ -5,7 +5,7 @@
 %<*readme>
 ____________________
 The XePersian package
-v22.0
+v22.1
 
 The xepersian package provides a convenient interface for 
 typesetting Persian and English texts in LaTeX, using XeTeX 
@@ -22,7 +22,7 @@ In doing so, please always explain your issue well enough, and always
 include a minimal working example showing the issue.
   
 
-Current version release date: 2018/12/07
+Current version release date: 2018/12/10
 ______________
 Vafa Khalighi
 
@@ -151,7 +151,7 @@ by Vafa Khalighi.
 \documentclass{ltxdoc}
 \input{xepersian-doc-preamble.ltx}
 \hypersetup{%
-  pdftitle={Source documentation for version 22.0 of the XePersian
+  pdftitle={Source documentation for version 22.1 of the XePersian
                 package}%
 }
 \EnableCrossrefs
@@ -170,7 +170,7 @@ by Vafa Khalighi.
 % \GetFileInfo{\jobname.dtx}
 % \title{\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}\\
 %\LARGE Persian for \LaTeXe, using {\XeTeX} engine\\[5pt]
-%\large Source documentation for \textcolor{blue!65!black}{version 22.0}}
+%\large Source documentation for \textcolor{blue!65!black}{version 22.1}}
 % \author{Vafa Khalighi}
 %\setcounter{page}{0}
 %\thispagestyle{empty}
@@ -180,7 +180,7 @@ by Vafa Khalighi.
 %\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}
 %
 %\Large
-%Source documentation for \textcolor{blue!65!black}{version 22.0}}
+%Source documentation for \textcolor{blue!65!black}{version 22.1}}
 %
 %\vskip 0pt plus 3fill
 %\textit{\large to my Master, \textbf{Ferdowsi The Great}}
@@ -3425,8 +3425,8 @@ U+003E U+003E <> U+00BB ; >> -> RIGHT POINTING GUILLEMET
 % \section{File \texttt{xepersian.sty}}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\def\xepersian@version{22.0}
-\def\xepersiandate{2018/12/07}
+\def\xepersian@version{22.1}
+\def\xepersiandate{2018/12/10}
 \ProvidesPackage{xepersian}[\xepersiandate\space v\xepersian@version\space 
 Persian typesetting in XeLaTeX]
 \RequirePackage{fontspec}
@@ -3567,9 +3567,10 @@ Persian typesetting in XeLaTeX]
      \XeTeXinterchartoks \xepersian@H  \bidi@digits@charclass = {\xepersian@@start@switch@textdigitfont}
      \XeTeXinterchartoks \bidi@digits@charclass  \xepersian@H = {\xepersian@@stop@switch@textdigitfont}
    }
-   \newcommand*{\xepersian@@start@switch@textdigitfont}{\ifx\f@family\ttdefault\else\if@nonlatin\if@@textdigitfont@on\bgroup\xepersian@textdigitfont\else\fi\fi\fi}
-   \newcommand*{\xepersian@@stop@switch@textdigitfont}{\ifx\f@family\ttdefault\else\if@nonlatin\if@@textdigitfont@on\egroup\else\fi\fi\fi}
  }
+ 
+\newcommand*{\xepersian@@start@switch@textdigitfont}{\ifx\f@family\ttdefault\else\if@nonlatin\if@@textdigitfont@on\bgroup\xepersian@textdigitfont\else\fi\fi\fi}
+\newcommand*{\xepersian@@stop@switch@textdigitfont}{\ifx\f@family\ttdefault\else\if@nonlatin\if@@textdigitfont@on\egroup\else\fi\fi\fi} 
  
 \cs_set_eq:NN \__xepersian_settextdigitfont_hook:nn   \use_none:nn
  
@@ -4225,7 +4226,7 @@ Persian typesetting in XeLaTeX]
 
 \newcommand*{\@xepersian@pdfcustomproperties}{%
   This is the xepersian package, Version \xepersian@version,
-  Released December 07, 2018. 
+  Released December 10, 2018. 
 }
 
 \newcommand\twocolumnstableofcontents{%
