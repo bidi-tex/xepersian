@@ -5,7 +5,7 @@
 %<*readme>
 ____________________
 The XePersian package
-v22.2
+v22.3
 
 The xepersian package provides a convenient interface for 
 typesetting Persian and English texts in LaTeX, using XeTeX 
@@ -16,13 +16,13 @@ documentation, or ask for any new features, or suggest any
 improvements, or ask any questions about the package, then 
 please use the issue tracker:
 
-  <https://github.com/bidirtex/xepersian/issues>
+  <https://github.com/persiantex/xepersian/issues>
   
 In doing so, please always explain your issue well enough, and always
 include a minimal working example showing the issue.
   
 
-Current version release date: 2018/12/11
+Current version release date: 2018/12/12
 ______________
 Vafa Khalighi
 
@@ -110,7 +110,7 @@ by Vafa Khalighi.
   \MetaPrefix\space End of file `\outFileName'.%
 }
 \usepostamble\mapping@postamble
-\generate{\file{persiandigits.map}{\from{\jobname.dtx}{persiandigits.map}}}
+\generate{\file{persian-tex-text.map}{\from{\jobname.dtx}{persian-tex-text.map}}}
 \let\MetaPrefix\DoubleperCent
 \usepostamble\org@postamble
 \generate{\file{rapport1-xepersian.def}{\from{\jobname.dtx}{table,rapport1-xepersian.def}}}
@@ -152,7 +152,7 @@ by Vafa Khalighi.
 \documentclass{ltxdoc}
 \input{xepersian-doc-preamble.ltx}
 \hypersetup{%
-  pdftitle={Source documentation for version 22.2 of the XePersian
+  pdftitle={Source documentation for version 22.3 of the XePersian
                 package}%
 }
 \EnableCrossrefs
@@ -171,7 +171,7 @@ by Vafa Khalighi.
 % \GetFileInfo{\jobname.dtx}
 % \title{\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}\\
 %\LARGE Persian for \LaTeXe, using {\XeTeX} engine\\[5pt]
-%\large Source documentation for \textcolor{blue!65!black}{version 22.2}}
+%\large Source documentation for \textcolor{blue!65!black}{version 22.3}}
 % \author{Vafa Khalighi}
 %\setcounter{page}{0}
 %\thispagestyle{empty}
@@ -181,7 +181,7 @@ by Vafa Khalighi.
 %\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}
 %
 %\Large
-%Source documentation for \textcolor{blue!65!black}{version 22.2}}
+%Source documentation for \textcolor{blue!65!black}{version 22.3}}
 %
 %\vskip 0pt plus 3fill
 %\textit{\large to my Master, \textbf{Ferdowsi The Great}}
@@ -192,7 +192,7 @@ by Vafa Khalighi.
 %or ask for any new features, or suggest any improvements, or ask any questions about the package, then please use the issue tracker:
 %
 %\medskip
-%  \centerline{\url{https://github.com/bidirtex/xepersian/issues}}
+%  \centerline{\url{https://github.com/persiantex/xepersian/issues}}
 %
 %\medskip
 %In doing so, please always explain your issue well enough, and always include
@@ -215,7 +215,7 @@ by Vafa Khalighi.
 %\iffalse
 %<*table>
 %\fi
-%% \CheckSum{10914}
+%% \CheckSum{10947}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -2219,7 +2219,7 @@ by Vafa Khalighi.
 \input{latex-localise-misc-xepersian.def}
 \input{packages-localise-xepersian.def}
 \aliasfontfeature{ExternalLocation}{مکان‌خارجی}
-\aliasfontfeature{ExternalLocation}{مسیر}
+\aliasfontfeature{Path}{مسیر}
 \aliasfontfeature{Renderer}{تحویل‌دهنده}
 \aliasfontfeature{BoldFont}{قلم‌سیاه}
 \aliasfontfeature{Language}{زبان}
@@ -3078,12 +3078,12 @@ by Vafa Khalighi.
 %    \end{macrocode}
 % \iffalse
 %</packages-localise-xepersian.def>
-%<*persiandigits.map>
+%<*persian-tex-text.map>
 %\fi
-% \section{File \texttt{persiandigits.map}}
+% \section{File \texttt{persian-tex-text.map}}
 %    \begin{macrocode}
-LHSName "Digits"
-RHSName "PersianDigits"
+LHSName "persian-TeX-text"
+RHSName "Unicode"
 
 pass(Unicode)
 U+0030 <> U+06F0 ;
@@ -3122,7 +3122,7 @@ U+003C U+003C <> U+00AB ; << -> LEFT POINTING GUILLEMET
 U+003E U+003E <> U+00BB ; >> -> RIGHT POINTING GUILLEMET
 %    \end{macrocode}
 % \iffalse
-%</persiandigits.map>
+%</persian-tex-text.map>
 %<*rapport1-xepersian.def>
 %\fi
 % \section{File \texttt{rapport1-xepersian.def}}
@@ -3299,9 +3299,24 @@ U+003E U+003E <> U+00BB ; >> -> RIGHT POINTING GUILLEMET
 %\fi
 % \section{File \texttt{soul-xepersian.def}}
 %    \begin{macrocode}
-\ProvidesFile{soul-xepersian.def}[2015/10/16 v0.1 adaptations for soul package]
-\let\SOUL@tt\relax
-\newfontface{\SOUL@tt}{Times New Roman}
+\ProvidesFile{soul-xepersian.def}[2018/12/12 v0.2 adaptations for soul package]
+\let\SOUL@tt@latin\SOUL@tt
+\newfontface{\SOUL@tt@nonlatin}{Times New Roman}
+\def\SOUL@tt{%
+  \if@nonlatin
+    \SOUL@tt@nonlatin
+  \else
+    \SOUL@tt@latin
+  \fi
+}
+\bidi@appto\resetlatinfont{%
+  \setbox\z@\hbox{\SOUL@tt-}%
+  \SOUL@ttwidth\wd\z@
+}
+\bidi@appto\setpersianfont{%
+  \setbox\z@\hbox{\SOUL@tt-}%
+  \SOUL@ttwidth\wd\z@
+}
 %    \end{macrocode}
 % \iffalse
 %</soul-xepersian.def>
@@ -3442,8 +3457,8 @@ U+003E U+003E <> U+00BB ; >> -> RIGHT POINTING GUILLEMET
 % \section{File \texttt{xepersian.sty}}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\def\xepersian@version{22.2}
-\def\xepersiandate{2018/12/11}
+\def\xepersian@version{22.3}
+\def\xepersiandate{2018/12/12}
 \ProvidesPackage{xepersian}[\xepersiandate\space v\xepersian@version\space 
 Persian typesetting in XeLaTeX]
 \RequirePackage{fontspec}
@@ -3467,7 +3482,7 @@ Persian typesetting in XeLaTeX]
 * ^^J%
 * Location on CTAN: /macros/xetex/latex/xepersian^^J%
 * ^^J%
-* Issue tracker: https://github.com/bidirtex/xepersian/issues^^J%
+* Issue tracker: https://github.com/persiantex/xepersian/issues^^J%
 * ^^J%
 ****************************************************}
 \typeout{\@xepersian@info}
@@ -3524,6 +3539,20 @@ Persian typesetting in XeLaTeX]
 \newfontlanguage{Persian}{FAR}
 \ExplSyntaxOn
 
+\keys_define:nn {fontspec-opentype}
+  {
+    Ligatures / PersianTeX .code:n = { \tl_set:Nn \l__fontspec_mapping_tl {persian-tex-text} },
+    Ligatures / PersianTeXReset .code:n = { \tl_clear:N \l__fontspec_mapping_tl },
+  }
+
+\keys_define:nn {fontspec-aat}
+ {
+  Ligatures / PersianTeX .code:n =
+   {
+     \tl_set:Nn \l__fontspec_mapping_tl { persian-tex-text }
+   }
+ }
+
 \DeclareDocumentCommand \settextfont { O{} m O{} }
   {
     \__xepersian_main_settextfont:nn {#1,#3} {#2}
@@ -3531,7 +3560,7 @@ Persian typesetting in XeLaTeX]
   }
 \cs_new:Nn \__xepersian_main_settextfont:nn
  {
-  \fontspec_set_family:Nnn \l__xepersian_persianfont_family_tl {Script=Persian,Mapping=persiandigits,#1} {#2}
+  \fontspec_set_family:Nnn \l__xepersian_persianfont_family_tl {Script=Persian,Ligatures=PersianTeX,#1} {#2}
   \tl_set_eq:NN \rmdefault \l__xepersian_persianfont_family_tl
   \use:x { \exp_not:n { \DeclareRobustCommand \persianfont }
    {
@@ -3555,7 +3584,7 @@ Persian typesetting in XeLaTeX]
   }
 \cs_new:Nn \__xepersian_main_settextdigitfont:nn
  {
-  \fontspec_set_family:Nnn \l__xepersian_textdigitfont_family_tl {Script=Persian,Mapping=persiandigits,#1} {#2}
+  \fontspec_set_family:Nnn \l__xepersian_textdigitfont_family_tl {Script=Persian,Ligatures=PersianTeX,#1} {#2}
   \use:x
    {
     \exp_not:n { \DeclareRobustCommand \xepersian@textdigitfont }
@@ -3606,7 +3635,7 @@ Persian typesetting in XeLaTeX]
   }
 \cs_new:Nn \__xepersian_main_setlatintextfont:nn
  {
-  \fontspec_set_family:Nnn \l__xepersian_latinfont_family_tl {Mapping=tex-text,#1} {#2}
+  \fontspec_set_family:Nnn \l__xepersian_latinfont_family_tl {Ligatures=TeX,#1} {#2}
   \use:x { \exp_not:n { \DeclareRobustCommand \latinfont }
    {
     \exp_not:N \fontencoding { \g__fontspec_nfss_enc_tl }
@@ -3637,7 +3666,7 @@ Persian typesetting in XeLaTeX]
   }
 \cs_new:Nn \__xepersian_main_defpersianfont:nnnN
  {
-  \fontspec_set_family:cnn { l__xepersian_ \cs_to_str:N #1 _family_tl } {Script=Persian,Mapping=persiandigits,#2} {#3}
+  \fontspec_set_family:cnn { l__xepersian_ \cs_to_str:N #1 _family_tl } {Script=Persian,Ligatures=PersianTeX,#2} {#3}
   \use:x
    {
     \exp_not:N #4 \exp_not:N #1 {}
@@ -3661,7 +3690,7 @@ Persian typesetting in XeLaTeX]
   }
 \cs_new:Nn \__xepersian_main_deflatinfont:nnnN
  {
-  \fontspec_set_family:cnn { l__xepersian_ \cs_to_str:N #1 _family_tl } {Mapping=tex-text,#2} {#3}
+  \fontspec_set_family:cnn { l__xepersian_ \cs_to_str:N #1 _family_tl } {Ligatures=TeX,#2} {#3}
   \use:x
    {
     \exp_not:N #4 \exp_not:N #1 {}
@@ -3711,7 +3740,7 @@ Persian typesetting in XeLaTeX]
   }
 \cs_new:Nn \__xepersian_main_setpersiansansfont:nn
  {
-  \fontspec_set_family:Nnn \l__xepersian_persiansffamily_family_tl {Script=Persian,Mapping=persiandigits,#1} {#2}
+  \fontspec_set_family:Nnn \l__xepersian_persiansffamily_family_tl {Script=Persian,Ligatures=PersianTeX,#1} {#2}
   \tl_set_eq:NN \persiansfdefault \l__xepersian_persiansffamily_family_tl
   \use:x { \exp_not:n { \DeclareRobustCommand \persiansffamily }
    {
@@ -3735,7 +3764,7 @@ Persian typesetting in XeLaTeX]
   }
 \cs_new:Nn \__xepersian_main_setpersianmonofont:nn
  {
-  \fontspec_set_family:Nnn \l__xepersian_persianttfamily_family_tl {Script=Persian,Mapping=persiandigits,#1} {#2}
+  \fontspec_set_family:Nnn \l__xepersian_persianttfamily_family_tl {Script=Persian,Ligatures=PersianTeX,#1} {#2}
   \tl_set_eq:NN \persianttdefault \l__xepersian_persianttfamily_family_tl
   \use:x { \exp_not:n { \DeclareRobustCommand \persianttfamily }
    {
@@ -3759,7 +3788,7 @@ Persian typesetting in XeLaTeX]
   }
 \cs_new:Nn \__xepersian_main_setnavarfont:nn
  {
-  \fontspec_set_family:Nnn \l__xepersian_navarfamily_family_tl {Script=Persian,Mapping=persiandigits,#1} {#2}
+  \fontspec_set_family:Nnn \l__xepersian_navarfamily_family_tl {Script=Persian,Ligatures=PersianTeX,#1} {#2}
   \tl_set_eq:NN \navardefault \l__xepersian_navarfamily_family_tl
   \use:x { \exp_not:n { \DeclareRobustCommand \navarfamily }
    {
@@ -3783,7 +3812,7 @@ Persian typesetting in XeLaTeX]
   }
 \cs_new:Nn \__xepersian_main_setpookfont:nn
  {
-  \fontspec_set_family:Nnn \l__xepersian_pookfamily_family_tl {Script=Persian,Mapping=persiandigits,#1} {#2}
+  \fontspec_set_family:Nnn \l__xepersian_pookfamily_family_tl {Script=Persian,Ligatures=PersianTeX,#1} {#2}
   \tl_set_eq:NN \pookdefault \l__xepersian_pookfamily_family_tl
   \use:x { \exp_not:n { \DeclareRobustCommand \pookfamily }
    {
@@ -3807,7 +3836,7 @@ Persian typesetting in XeLaTeX]
   }
 \cs_new:Nn \__xepersian_main_setsayehfont:nn
  {
-  \fontspec_set_family:Nnn \l__xepersian_sayehfamily_family_tl {Script=Persian,Mapping=persiandigits,#1} {#2}
+  \fontspec_set_family:Nnn \l__xepersian_sayehfamily_family_tl {Script=Persian,Ligatures=PersianTeX,#1} {#2}
   \tl_set_eq:NN \sayehdefault \l__xepersian_sayehfamily_family_tl
   \use:x { \exp_not:n { \DeclareRobustCommand \sayehfamily }
    {
@@ -3831,7 +3860,7 @@ Persian typesetting in XeLaTeX]
   }
 \cs_new:Nn \__xepersian_main_setiranicfont:nn
  {
-  \fontspec_set_family:Nnn \l__xepersian_iranicfamily_family_tl {Script=Persian,Mapping=persiandigits,#1} {#2}
+  \fontspec_set_family:Nnn \l__xepersian_iranicfamily_family_tl {Script=Persian,Ligatures=PersianTeX,#1} {#2}
   \tl_set_eq:NN \iranicdefault \l__xepersian_iranicfamily_family_tl
   \use:x { \exp_not:n { \DeclareRobustCommand \iranicfamily }
    {
@@ -4243,7 +4272,7 @@ Persian typesetting in XeLaTeX]
 
 \newcommand*{\@xepersian@pdfcustomproperties}{%
   This is the xepersian package, Version \xepersian@version,
-  Released December 11, 2018. 
+  Released December 12, 2018. 
 }
 
 \newcommand\twocolumnstableofcontents{%
@@ -4943,7 +4972,7 @@ number is 999,999,999.}%
 }{}{}
 \fi
 
-\setlatintextfont[ExternalLocation,BoldFont={lmroman10-bold},BoldItalicFont={lmroman10-bolditalic},ItalicFont={lmroman10-italic},SmallCapsFont={lmromancaps10-regular},SlantedFont={lmromanslant10-regular},BoldSlantedFont={lmromanslant10-bold}]{lmroman10-regular}%
+\setlatintextfont[Path,BoldFont={lmroman10-bold},BoldItalicFont={lmroman10-bolditalic},ItalicFont={lmroman10-italic},SmallCapsFont={lmromancaps10-regular},SlantedFont={lmromanslant10-regular},BoldSlantedFont={lmromanslant10-bold}]{lmroman10-regular}%
 \PersianAlphs
 %    \end{macrocode}
 % \iffalse
@@ -5964,7 +5993,7 @@ indexblock environment may only appear inside frontpage environment.
 \cs_new:Nn \__xepersian_main_setmathdigitfont:nn
  {
   \let\glb@currsize\relax
-  \fontspec_set_family:Nnn \g__xepersian_mathdigitsfamily_tl {Mapping=persiandigits,#1} {#2}
+  \fontspec_set_family:Nnn \g__xepersian_mathdigitsfamily_tl {Ligatures=PersianTeX,#1} {#2}
   \__xepersian_setmathdigitfont_hook:nn {#1} {#2}
     \xepersian@PackageInfo{Defining the default Persian maths digits font as '#2'}
   \DeclareSymbolFont{OPERATORS}   {\g_fontspec_encoding_tl}{\g__xepersian_mathdigitsfamily_tl} {m}{n}
@@ -5997,7 +6026,7 @@ indexblock environment may only appear inside frontpage environment.
   }
 \cs_new:Nn \__xepersian_main_setmathsfdigitfont:nn
  {
-  \fontspec_set_family:Nnn \g__xepersian_mathsfdigitfamily_tl {Mapping=persiandigits,#1} {#2}
+  \fontspec_set_family:Nnn \g__xepersian_mathsfdigitfamily_tl {Ligatures=PersianTeX,#1} {#2}
   \__xepersian_setmathsfdigitfont_hook:nn {#1} {#2}
       \DeclareSymbolFont{new@mathsf@font@digits}{\g_fontspec_encoding_tl}{\g__xepersian_mathsfdigitfamily_tl}{m}{n}
     \def\persianmathsfdigits{\tl_set_eq:NN \mathsf \new@mathsf}
@@ -6011,7 +6040,7 @@ indexblock environment may only appear inside frontpage environment.
   }
 \cs_new:Nn \__xepersian_main_setmathttdigitfont:nn
  {
-  \fontspec_set_family:Nnn \g__xepersian_mathttdigitfamily_tl {Mapping=persiandigits,#1} {#2}
+  \fontspec_set_family:Nnn \g__xepersian_mathttdigitfamily_tl {Ligatures=PersianTeX,#1} {#2}
   \__xepersian_setmathttdigitfont_hook:nn {#1} {#2}
       \DeclareSymbolFont{new@mathtt@font@digits}{\g_fontspec_encoding_tl}{\g__xepersian_mathttdigitfamily_tl}{m}{n}
     \def\persianmathttdigits{\tl_set_eq:NN \mathtt \new@mathtt}
