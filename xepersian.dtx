@@ -5,7 +5,7 @@
 %<*readme>
 ____________________
 The XePersian package
-v22.4
+v22.5
 
 The xepersian package provides a convenient interface for 
 typesetting Persian and English texts in LaTeX, using XeTeX 
@@ -22,7 +22,7 @@ In doing so, please always explain your issue well enough, and always
 include a minimal working example showing the issue.
   
 
-Current version release date: 2018/12/14
+Current version release date: 2018/12/16
 ______________
 Vafa Khalighi
 
@@ -152,7 +152,7 @@ by Vafa Khalighi.
 \documentclass{ltxdoc}
 \input{xepersian-doc-preamble.ltx}
 \hypersetup{%
-  pdftitle={Source documentation for version 22.4 of the XePersian
+  pdftitle={Source documentation for version 22.5 of the XePersian
                 package}%
 }
 \EnableCrossrefs
@@ -171,7 +171,7 @@ by Vafa Khalighi.
 % \GetFileInfo{\jobname.dtx}
 % \title{\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}\\
 %\LARGE Persian for \LaTeXe, using {\XeTeX} engine\\[5pt]
-%\large Source documentation for \textcolor{blue!65!black}{version 22.4}}
+%\large Source documentation for \textcolor{blue!65!black}{version 22.5}}
 % \author{Vafa Khalighi}
 %\setcounter{page}{0}
 %\thispagestyle{empty}
@@ -181,7 +181,7 @@ by Vafa Khalighi.
 %\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}
 %
 %\Large
-%Source documentation for \textcolor{blue!65!black}{version 22.4}}
+%Source documentation for \textcolor{blue!65!black}{version 22.5}}
 %
 %\vskip 0pt plus 3fill
 %\textit{\large to my Master, \textbf{Ferdowsi The Great}}
@@ -215,7 +215,7 @@ by Vafa Khalighi.
 %\iffalse
 %<*table>
 %\fi
-%% \CheckSum{10996}
+%% \CheckSum{10999}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -3457,8 +3457,8 @@ U+003E U+003E <> U+00BB ; >> -> RIGHT POINTING GUILLEMET
 % \section{File \texttt{xepersian.sty}}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\def\xepersian@version{22.4}
-\def\xepersiandate{2018/12/14}
+\def\xepersian@version{22.5}
+\def\xepersiandate{2018/12/16}
 \ProvidesPackage{xepersian}[\xepersiandate\space v\xepersian@version\space 
 Persian typesetting in XeLaTeX]
 \RequirePackage{fontspec}
@@ -4272,7 +4272,7 @@ Persian typesetting in XeLaTeX]
 
 \newcommand*{\@xepersian@pdfcustomproperties}{%
   This is the xepersian package, Version \xepersian@version,
-  Released December 14, 2018. 
+  Released December 16, 2018. 
 }
 
 \newcommand\twocolumnstableofcontents{%
@@ -5859,7 +5859,7 @@ indexblock environment may only appear inside frontpage environment.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{xepersian-mathsdigitspec}
-  [2018/12/14 v1.1.6 Unicode Persian maths digits in XeLaTeX]
+  [2018/12/16 v1.1.7 Unicode Persian maths digits in XeLaTeX]
 \def\new@mathgroup{\alloc@8\mathgroup\chardef\@cclvi}
 \let\newfam\new@mathgroup
 \def\select@group#1#2#3#4{%
@@ -6001,27 +6001,45 @@ indexblock environment may only appear inside frontpage environment.
 
 \prg_new_conditional:Nnn \__xepersian_mathsdigitspec_primitive_font_char_if_exist:n {p,TF,T,F}
   {
-    \etex_iffontchar:D \l_fontspec_font `#1 \scan_stop:
+    \etex_iffontchar:D \l_fontspec_font "#1 \scan_stop:
       \prg_return_true:
     \else:
       \prg_return_false:
     \fi:
   }
   
+\clist_new:N \l_xepersian_mathsdigitspec_char_clist
+
+\cs_new:Nn \__xepersian_mathsdigitspec_char_set_not_exist_error:nn
+ {
+    \clist_set:Nn \l_xepersian_mathsdigitspec_char_clist { #1 }
+    \clist_map_inline:Nn \l_xepersian_mathsdigitspec_char_clist {
+      \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF { ##1 }{ \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #2 } { ##1 } }
+    }
+ }
+ 
+\cs_new:Nn \__xepersian_mathsdigitspec_char_prepend_not_exist_error:nn
+ {
+    \clist_put_left:Nn \l_xepersian_mathsdigitspec_char_clist { #1 }
+    \clist_map_inline:Nn \l_xepersian_mathsdigitspec_char_clist {
+      \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF { ##1 }{ \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #2 } { ##1 } }
+    }
+ }
+ 
+\cs_new:Nn \__xepersian_mathsdigitspec_char_append_not_exist_error:nn
+ {
+    \clist_put_right:Nn \l_xepersian_mathsdigitspec_char_clist { #1 }
+    \clist_map_inline:Nn \l_xepersian_mathsdigitspec_char_clist {
+      \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF { ##1 }{ \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #2 } { ##1 } }
+    }
+ } 
+  
 \cs_new:Nn \__xepersian_mathsdigitspec_char_not_exist_error:n
  {
-    \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF ۰ { \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #1 } { 06F0 } }
-    \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF ۱ { \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #1 } { 06F1 } }
-    \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF ۲ { \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #1 } { 06F2 } }
-    \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF ۳ { \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #1 } { 06F3 } }
-    \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF ۴ { \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #1 } { 06F4 } }
-    \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF ۵ { \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #1 } { 06F5 } }
-    \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF ۶ { \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #1 } { 06F6 } }
-    \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF ۷ { \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #1 } { 06F7 } }
-    \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF ۸ { \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #1 } { 06F8 } }
-    \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF ۹ { \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #1 } { 06F9 } }
-    \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF ٫ { \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #1 } { 066B } }
-    \__xepersian_mathsdigitspec_primitive_font_char_if_exist:nF ٪ { \__xepersian_mathsdigitspec_error:nxx {char-not-exist} { #1 } { 066A } }                          
+    \__xepersian_mathsdigitspec_char_set_not_exist_error:nn { 
+      06F0 , 06F1 , 06F2 , 06F3 , 06F4 , 06F5 , 06F6 , 06F7 , 06F8 ,
+      06F9 , 066A , 066B
+    } { #1 }                         
  }
 
 \DeclareDocumentCommand \setmathdigitfont { O{} m O{} }
