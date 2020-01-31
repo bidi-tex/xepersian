@@ -15,13 +15,11 @@ mkdir -p doc/xelatex/xepersian fonts/misc/xetex/fontmapping/xepersian source/xel
 mkdir xepersian
 mv *.def *.sty *.cls tex/xelatex/xepersian
 cp *.ltx *.dtx *.ins  xepersian-logo.pdf source/xelatex/xepersian
-cp -r *.pdf *.py *.tex README img doc/xelatex/xepersian
+cp -r *.pdf *.py *.tex README.txt img doc/xelatex/xepersian
 mv persian-tex-text.map persian-tex-text.tec fonts/misc/xetex/fontmapping/xepersian
 zip -r xepersian.tds.zip doc/xelatex/xepersian fonts/misc/xetex/fontmapping/xepersian source/xelatex/xepersian tex/xelatex/xepersian
-mv doc/xelatex/xepersian/*.pdf doc/xelatex/xepersian/*.py doc/xelatex/xepersian/README  doc/xelatex/xepersian/img source/xelatex/xepersian/*.ltx source/xelatex/xepersian/*.dtx source/xelatex/xepersian/*.ins  xepersian
+mv doc/xelatex/xepersian/*.pdf doc/xelatex/xepersian/*.py doc/xelatex/xepersian/README.txt  doc/xelatex/xepersian/img source/xelatex/xepersian/*.ltx source/xelatex/xepersian/*.dtx source/xelatex/xepersian/*.ins  xepersian
 zip -r xepersian-ctan.zip xepersian.tds.zip xepersian
 rm -r doc tex source fonts xepersian
 rm *.aux  *.hd *.idx *.ilg *.ind *.log *.out *.toc xepersian.tds.zip
-
-
-
+rm     magazine-sample.tex test*tex xepersian-logo.tex xepersian.ins README.txt
