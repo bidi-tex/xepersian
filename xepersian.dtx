@@ -5,7 +5,7 @@
 %<*readme>
 ____________________
 The XePersian package
-v22.5
+v22.6
 
 The xepersian package provides a convenient interface for 
 typesetting Persian and English texts in LaTeX, using XeTeX 
@@ -16,17 +16,17 @@ documentation, or ask for any new features, or suggest any
 improvements, or ask any questions about the package, then 
 please use the issue tracker:
 
-  <https://github.com/persiantex/xepersian/issues>
+  <https://github.com/vafa-ac/xepersian/issues>
   
 In doing so, please always explain your issue well enough, and always
 include a minimal working example showing the issue.
   
 
-Current version release date: 2018/12/16
+Current version release date: 2019/03/03
 ______________
 Vafa Khalighi
 
-Copyright (c) 2008--2018
+Copyright (c) 2008--2019
 Distributed under the LaTeX Project Public License
 It may be distributed and/or modified under the LaTeX Project Public License,
 version 1.3c or higher (your choice). The latest version of
@@ -46,7 +46,7 @@ by Vafa Khalighi.
 \preamble
 
   __________________________________________________
-  Copyright (c) 2008--2018  Vafa Khalighi 
+  Copyright (c) 2008--2019  Vafa Khalighi 
 
   It may be distributed and/or modified under the LaTeX Project Public License,
   version 1.3c or higher (your choice). The latest version of
@@ -152,7 +152,7 @@ by Vafa Khalighi.
 \documentclass{ltxdoc}
 \input{xepersian-doc-preamble.ltx}
 \hypersetup{%
-  pdftitle={Source documentation for version 22.5 of the XePersian
+  pdftitle={Source documentation for version 22.6 of the XePersian
                 package}%
 }
 \EnableCrossrefs
@@ -171,7 +171,7 @@ by Vafa Khalighi.
 % \GetFileInfo{\jobname.dtx}
 % \title{\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}\\
 %\LARGE Persian for \LaTeXe, using {\XeTeX} engine\\[5pt]
-%\large Source documentation for \textcolor{blue!65!black}{version 22.5}}
+%\large Source documentation for \textcolor{blue!65!black}{version 22.6}}
 % \author{Vafa Khalighi}
 %\setcounter{page}{0}
 %\thispagestyle{empty}
@@ -181,7 +181,7 @@ by Vafa Khalighi.
 %\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}
 %
 %\Large
-%Source documentation for \textcolor{blue!65!black}{version 22.5}}
+%Source documentation for \textcolor{blue!65!black}{version 22.6}}
 %
 %\vskip 0pt plus 3fill
 %\textit{\large to my Master, \textbf{Ferdowsi The Great}}
@@ -192,7 +192,7 @@ by Vafa Khalighi.
 %or ask for any new features, or suggest any improvements, or ask any questions about the package, then please use the issue tracker:
 %
 %\medskip
-%  \centerline{\url{https://github.com/persiantex/xepersian/issues}}
+%  \centerline{\url{https://github.com/vafa-ac/xepersian/issues}}
 %
 %\medskip
 %In doing so, please always explain your issue well enough, and always include
@@ -202,7 +202,7 @@ by Vafa Khalighi.
 %
 %\vskip 0pt plus 3fill
 %
-%Copyright (c) 2008--2018 Vafa Khalighi
+%Copyright (c) 2008--2019 Vafa Khalighi
 %
 %\medskip
 %Permission is granted to distribute and/or modify \emph{both the documentation and the code} under the conditions of the \LaTeX{} Project Public License, either version 1.3c of this license or (at your option) any later version.
@@ -215,7 +215,7 @@ by Vafa Khalighi.
 %\iffalse
 %<*table>
 %\fi
-%% \CheckSum{10999}
+%% \CheckSum{11007}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -3457,8 +3457,8 @@ U+003E U+003E <> U+00BB ; >> -> RIGHT POINTING GUILLEMET
 % \section{File \texttt{xepersian.sty}}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\def\xepersian@version{22.5}
-\def\xepersiandate{2018/12/16}
+\def\xepersian@version{22.6}
+\def\xepersiandate{2019/03/03}
 \ProvidesPackage{xepersian}[\xepersiandate\space v\xepersian@version\space 
 Persian typesetting in XeLaTeX]
 \RequirePackage{fontspec}
@@ -3473,7 +3473,7 @@ Persian typesetting in XeLaTeX]
 * typesetting, using fonts provided in the^^J%
 * distribution.^^J%
 * ^^J%
-* Copyright (c) 2008--2018 Vafa Khalighi^^J%
+* Copyright (c) 2008--2019 Vafa Khalighi^^J%
 * ^^J%
 * v\xepersian@version, \xepersiandate^^J%
 * ^^J%
@@ -3482,7 +3482,7 @@ Persian typesetting in XeLaTeX]
 * ^^J%
 * Location on CTAN: /macros/xetex/latex/xepersian^^J%
 * ^^J%
-* Issue tracker: https://github.com/persiantex/xepersian/issues^^J%
+* Issue tracker: https://github.com/vafa-ac/xepersian/issues^^J%
 * ^^J%
 ****************************************************}
 \typeout{\@xepersian@info}
@@ -3918,8 +3918,10 @@ Persian typesetting in XeLaTeX]
 \bidi@newrobustcmd*{\rl}[1]{\RLE{\setpersianfont#1}}
 \def\latin{\LTR\LatinAlphs\@RTL@footnotefalse\resetlatinfont}
 \def\endlatin{\endLTR}
+\newenvironment{latin*}{\latin}{\endlatin\@endpetrue}
 \def\persian{\RTL\PersianAlphs\@RTL@footnotetrue\setpersianfont}
 \def\endpersian{\endRTL}
+\newenvironment{persian*}{\persian}{\endpersian\@endpetrue}
 \newenvironment{latinitems}{\begin{LTRitems}\LatinAlphs\@RTL@footnotefalse\resetlatinfont}{\end{LTRitems}}
 \newenvironment{persianitems}{\begin{RTLitems}\PersianAlphs\@RTL@footnotetrue\setpersianfont}{\end{RTLitems}}
 \let\originaltoday=\today
@@ -4272,7 +4274,7 @@ Persian typesetting in XeLaTeX]
 
 \newcommand*{\@xepersian@pdfcustomproperties}{%
   This is the xepersian package, Version \xepersian@version,
-  Released December 16, 2018. 
+  Released March 3, 2019. 
 }
 
 \newcommand\twocolumnstableofcontents{%
