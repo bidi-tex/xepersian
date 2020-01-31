@@ -1,8 +1,8 @@
 \usepackage{docmute}
 \usepackage{supertabular}
 \usepackage{fontspec}
-\setmainfont[Ligatures=TeX,Numbers=OldStyle]{Minion Pro}
-\setsansfont[Ligatures=TeX,Numbers=OldStyle]{Myriad Pro}
+%\setmainfont[Ligatures=TeX,Numbers=OldStyle]{Minion Pro}
+%\setsansfont[Ligatures=TeX,Numbers=OldStyle]{Myriad Pro}
 \usepackage{calc}
 \usepackage{pifont}
 \usepackage{bbding}
@@ -19,7 +19,12 @@
 }
 \usepackage{bidi}
 \setlength\columnseprule{.4pt}
-\newfontfamily\ParsiFont[Script=Arabic]{Iranian Sans}
+%
+% Font available
+% Apache License 2.0
+% https://github.com/nekofar/iranian-sans-fontface/archive/v1.0.6.zip
+\newfontfamily\ParsiFont[Script=Arabic]{IranianSansRegular.ttf}
+%
 \def\Pcs#1{\nxPLcs{#1}}
 \def\nxPLcs#1{\RLE{\texttt{\symbol{92}\ParsiFont#1}}}
 \def\Lenv#1{\texttt{#1}}
