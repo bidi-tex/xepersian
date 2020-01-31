@@ -5,7 +5,7 @@
 %<*readme>
 ____________________
 The XePersian package
-v22.7
+v22.8
 
 The xepersian package provides a convenient interface for 
 typesetting Persian and English texts in LaTeX, using XeTeX 
@@ -16,17 +16,19 @@ documentation, or ask for any new features, or suggest any
 improvements, or ask any questions about the package, then 
 please use the issue tracker:
 
-  <https://github.com/vafa-ac/xepersian/issues>
+  <https://github.com/bidi-tex/xepersian/issues>
   
 In doing so, please always explain your issue well enough, and always
 include a minimal working example showing the issue.
   
 
-Current version release date: 2019/05/01
+Current version release date: 2020-01-31
 ______________
-Vafa Khalighi
 
-Copyright (c) 2008--2019
+Copyright (c) Vafa Khalighi                2007-2019
+              bidi-tex GitHub Organisation 2018-2020
+
+
 Distributed under the LaTeX Project Public License
 It may be distributed and/or modified under the LaTeX Project Public License,
 version 1.3c or higher (your choice). The latest version of
@@ -46,7 +48,11 @@ by Vafa Khalighi.
 \preamble
 
   __________________________________________________
-  Copyright (c) 2008--2019  Vafa Khalighi 
+
+  Copyright (c) Vafa Khalighi                2007-2019
+                bidi-tex GitHub Organisation 2018-2020
+
+
 
   It may be distributed and/or modified under the LaTeX Project Public License,
   version 1.3c or higher (your choice). The latest version of
@@ -88,7 +94,7 @@ by Vafa Khalighi.
 \generate{\file{extrafootnotefeatures-xepersian.def}{\from{\jobname.dtx}{table,extrafootnotefeatures-xepersian.def}}}
 \generate{\file{extreport-xepersian.def}{\from{\jobname.dtx}{table,extreport-xepersian.def}}}
 \generate{\file{fancyref-xepersian.def}{\from{\jobname.dtx}{table,fancyref-xepersian.def}}}
-\generate{\file{fontspec-xepersian.def}{\from{\jobname.dtx}{table,fontspec-xepersian.def}}}
+%\generate{\file{fontspec-xepersian.def}{\from{\jobname.dtx}{table,fontspec-xepersian.def}}}
 \generate{\file{footnote-xepersian.def}{\from{\jobname.dtx}{table,footnote-xepersian.def}}}
 \generate{\file{framed-xepersian.def}{\from{\jobname.dtx}{table,framed-xepersian.def}}}
 \generate{\file{glossaries-xepersian.def}{\from{\jobname.dtx}{table,glossaries-xepersian.def}}}
@@ -149,7 +155,7 @@ by Vafa Khalighi.
 \documentclass{ltxdoc}
 \input{xepersian-doc-preamble.ltx}
 \hypersetup{%
-  pdftitle={Source documentation for version 22.7 of the XePersian
+  pdftitle={Source documentation for version 22.8 of the XePersian
                 package}%
 }
 \EnableCrossrefs
@@ -168,8 +174,8 @@ by Vafa Khalighi.
 % \GetFileInfo{\jobname.dtx}
 % \title{\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}\\
 %\LARGE Persian for \LaTeXe, using {\XeTeX} engine\\[5pt]
-%\large Source documentation for \textcolor{blue!65!black}{version 22.7}}
-% \author{Vafa Khalighi}
+%\large Source documentation for \textcolor{blue!65!black}{version 22.8}}
+% \author{Vafa Khalighi\thanks{Maintained by bidi-tex \url{https://github.com/bidi-tex}}}
 %\setcounter{page}{0}
 %\thispagestyle{empty}
 %\includegraphics[width=.3\textwidth]{xepersian-logo}\qquad
@@ -178,7 +184,7 @@ by Vafa Khalighi.
 %\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}
 %
 %\Large
-%Source documentation for \textcolor{blue!65!black}{version 22.7}}
+%Source documentation for \textcolor{blue!65!black}{version 22.8}}
 %
 %\vskip 0pt plus 3fill
 %\textit{\large to my Master, \textbf{Ferdowsi The Great}}
@@ -189,7 +195,7 @@ by Vafa Khalighi.
 %or ask for any new features, or suggest any improvements, or ask any questions about the package, then please use the issue tracker:
 %
 %\medskip
-%  \centerline{\url{https://github.com/vafa-ac/xepersian/issues}}
+%  \centerline{\url{https://github.com/bidi-tex/xepersian/issues}}
 %
 %\medskip
 %In doing so, please always explain your issue well enough, and always include
@@ -199,7 +205,8 @@ by Vafa Khalighi.
 %
 %\vskip 0pt plus 3fill
 %
-%Copyright (c) 2008--2019 Vafa Khalighi
+%Copyright (c) 2008-2019 Vafa Khalighi
+%              2018-2020 bidi-tex GitHub Organisation
 %
 %\medskip
 %Permission is granted to distribute and/or modify \emph{both the documentation and the code} under the conditions of the \LaTeX{} Project Public License, either version 1.3c of this license or (at your option) any later version.
@@ -1898,7 +1905,7 @@ by Vafa Khalighi.
 %\fi
 % \section{File \texttt{fontspec-xepersian.def}}
 %    \begin{macrocode}
-\ProvidesFile{fontspec-xepersian.def}[2019/05/01 v0.4 fontspec changes]
+\ProvidesFile{fontspec-xepersian.def}[2020-01-31 v0.4 fontspec changes]
 \ExplSyntaxOn
 \cs_new:Npn \__xepersian_error:nx    { \msg_error:nnx    {xepersian} }
 \char_set_catcode_space:n {32}
@@ -3460,8 +3467,8 @@ U+003E U+003E <> U+00BB ; >> -> RIGHT POINTING GUILLEMET
 % \section{File \texttt{xepersian.sty}}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\def\xepersian@version{22.7}
-\def\xepersiandate{2019/05/01}
+\def\xepersian@version{22.8}
+\def\xepersiandate{2020-01-31}
 \ProvidesPackage{xepersian}[\xepersiandate\space v\xepersian@version\space 
 Persian typesetting in XeLaTeX]
 \RequirePackage{fontspec}
@@ -3476,7 +3483,8 @@ Persian typesetting in XeLaTeX]
 * typesetting, using fonts provided in the^^J%
 * distribution.^^J%
 * ^^J%
-* Copyright (c) 2008--2019 Vafa Khalighi^^J%
+* Copyright (c) 2008-2019 Vafa Khalighi^^J%
+*               2018-2020 bidi-tex GitHub Organisation^^J%
 * ^^J%
 * v\xepersian@version, \xepersiandate^^J%
 * ^^J%
@@ -3485,7 +3493,7 @@ Persian typesetting in XeLaTeX]
 * ^^J%
 * Location on CTAN: /macros/xetex/latex/xepersian^^J%
 * ^^J%
-* Issue tracker: https://github.com/vafa-ac/xepersian/issues^^J%
+* Issue tracker: https://github.com/bidi-tex/xepersian/issues^^J%
 * ^^J%
 ****************************************************}
 \typeout{\@xepersian@info}
@@ -4932,13 +4940,6 @@ number is 999,999,999.}%
   \input{extrafootnotefeatures-xetex-bidi.def}%
   \input{extrafootnotefeatures-xepersian.def}%
 \fi
-
-\ExplSyntaxOn
-\bool_if:NF \l__xepersian_fontsloadable_bool
-  {
-    \input{fontspec-xepersian.def}%  
-  }
-\ExplSyntaxOff
 
 \bidi@patchcmd{\set@fontsize}{\@tempdimb#2pt}{%
   \@tempdimb\xepersian@@fontsize@scale\dimexpr#2pt\relax
