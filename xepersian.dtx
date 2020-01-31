@@ -5,7 +5,7 @@
 %<*readme>
 ____________________
 The XePersian package
-v22.6
+v22.7
 
 The xepersian package provides a convenient interface for 
 typesetting Persian and English texts in LaTeX, using XeTeX 
@@ -22,7 +22,7 @@ In doing so, please always explain your issue well enough, and always
 include a minimal working example showing the issue.
   
 
-Current version release date: 2019/03/03
+Current version release date: 2019/05/01
 ______________
 Vafa Khalighi
 
@@ -152,7 +152,7 @@ by Vafa Khalighi.
 \documentclass{ltxdoc}
 \input{xepersian-doc-preamble.ltx}
 \hypersetup{%
-  pdftitle={Source documentation for version 22.6 of the XePersian
+  pdftitle={Source documentation for version 22.7 of the XePersian
                 package}%
 }
 \EnableCrossrefs
@@ -171,7 +171,7 @@ by Vafa Khalighi.
 % \GetFileInfo{\jobname.dtx}
 % \title{\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}\\
 %\LARGE Persian for \LaTeXe, using {\XeTeX} engine\\[5pt]
-%\large Source documentation for \textcolor{blue!65!black}{version 22.6}}
+%\large Source documentation for \textcolor{blue!65!black}{version 22.7}}
 % \author{Vafa Khalighi}
 %\setcounter{page}{0}
 %\thispagestyle{empty}
@@ -181,7 +181,7 @@ by Vafa Khalighi.
 %\textcolor{blue!65!black}{\Huge The \textsf{\XePersian} \textit{Package}}
 %
 %\Large
-%Source documentation for \textcolor{blue!65!black}{version 22.6}}
+%Source documentation for \textcolor{blue!65!black}{version 22.7}}
 %
 %\vskip 0pt plus 3fill
 %\textit{\large to my Master, \textbf{Ferdowsi The Great}}
@@ -215,7 +215,7 @@ by Vafa Khalighi.
 %\iffalse
 %<*table>
 %\fi
-%% \CheckSum{11007}
+%% \CheckSum{11018}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -1901,7 +1901,7 @@ by Vafa Khalighi.
 %\fi
 % \section{File \texttt{fontspec-xepersian.def}}
 %    \begin{macrocode}
-\ProvidesFile{fontspec-xepersian.def}[2018/12/14 v0.3 fontspec changes]
+\ProvidesFile{fontspec-xepersian.def}[2019/05/01 v0.4 fontspec changes]
 \ExplSyntaxOn
 \cs_new:Npn \__xepersian_error:nx    { \msg_error:nnx    {xepersian} }
 \char_set_catcode_space:n {32}
@@ -1927,35 +1927,41 @@ by Vafa Khalighi.
   }
 \cs_undefine:N \__fontspec_load_font:
 \cs_new:Nn \__fontspec_load_font:
- {
-  \__fontspec_primitive_font_set:Nnn \l_fontspec_font
-     { \__fontspec_construct_font_call:nn { \l__fontspec_fontname_up_tl } {} } {\f@size pt}
-  \__fontspec_primitive_font_if_null:NT \l_fontspec_font { \__fontspec_error:nx {font-not-found} {\l__fontspec_fontname_up_tl} }
+  {
+
+    \__fontspec_primitive_font_set:NnnF \l__fontspec_test_font
+      { \__fontspec_construct_font_call:nn { \l__fontspec_fontname_up_tl } {} }
+      { \f@size pt - 2sp }
+      { \__fontspec_error:nx {font-not-found} {\l__fontspec_fontname_up_tl} }
   \__xepersian_font_if_cannot_be_loaded:NnT \l__fontspec_fontname_up_tl { HM } 
   { 
     \__xepersian_error:nx {font-cannot-be-loaded} {\l__fontspec_fontname_up_tl} 
     \cs_gset_eq:NN \l__fontspec_fontname_up_tl \tex_nullfont:D
   }
-  \__fontspec_set_font_type:N \l_fontspec_font
-  \__fontspec_primitive_font_gset:Nnn \l_fontspec_font
-     { \__fontspec_construct_font_call:nn { \l__fontspec_fontname_up_tl } {} } {\f@size pt}
-  \l_fontspec_font % this is necessary for LuaLaTeX to check the scripts properly
- }
-\cs_undefine:N \__fontspec_load_fontname:n
-\cs_new:Nn \__fontspec_load_fontname:n
- {
-    \__fontspec_load_external_fontoptions:Nn \l_fontspec_fontname_tl {#1}
-    \prop_get:NVNF \g__fontspec_fontopts_prop \l_fontspec_fontname_tl \l__fontspec_fontopts_clist
-     { \clist_clear:N \l__fontspec_fontopts_clist }
+    \__fontspec_set_font_type:N \l__fontspec_test_font
+    \__fontspec_primitive_font_gset:Onn \l__fontspec_fontface_cs_tl
+      {  \__fontspec_construct_font_call:nn { \l__fontspec_fontname_up_tl } {} }
+      { \f@size pt }
+
+    \l__fontspec_fontface_cs_tl % this is necessary for LuaLaTeX to check the scripts properly
+
+  }
+\cs_undefine:N \__fontspec_load_fontname:Nn
+\cs_new:Nn \__fontspec_load_fontname:Nn
+  {
+    \__fontspec_load_external_fontoptions:Nn #1 {#2}
+    \prop_get:NVNF \g__fontspec_fontopts_prop #1 \l__fontspec_fontopts_clist
+      { \clist_clear:N \l__fontspec_fontopts_clist }
     \keys_set_groups:nnV {fontspec/fontname} {getfontname} \l__fontspec_fontopts_clist
-    \__fontspec_primitive_font_set:Nnn \l_fontspec_font { \__fontspec_construct_font_call:nn {\l_fontspec_fontname_tl} {} } {\f@size pt}
-    \__fontspec_primitive_font_if_null:NT \l_fontspec_font { \__fontspec_error:nx {font-not-found} {#1} }
-  \__xepersian_font_if_cannot_be_loaded:NnT #1 { HM } 
+    \__fontspec_primitive_font_set:OnnF \l__fontspec_fontface_cs_tl
+      { \__fontspec_construct_font_call:nn {#1} {} } { \f@size pt }
+      { \__fontspec_error:nx {font-not-found} {#2} }
+    \__xepersian_font_if_cannot_be_loaded:NnT #2 { HM } 
   { 
-    \__xepersian_error:nx {font-cannot-be-loaded} {#1} 
+    \__xepersian_error:nx {font-cannot-be-loaded} {#2} 
     \cs_gset_eq:NN \l_fontspec_font \tex_nullfont:D
   }
- }
+  }
 \ExplSyntaxOff
 %    \end{macrocode}
 % \iffalse
@@ -3457,8 +3463,8 @@ U+003E U+003E <> U+00BB ; >> -> RIGHT POINTING GUILLEMET
 % \section{File \texttt{xepersian.sty}}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\def\xepersian@version{22.6}
-\def\xepersiandate{2019/03/03}
+\def\xepersian@version{22.7}
+\def\xepersiandate{2019/05/01}
 \ProvidesPackage{xepersian}[\xepersiandate\space v\xepersian@version\space 
 Persian typesetting in XeLaTeX]
 \RequirePackage{fontspec}
@@ -3542,7 +3548,9 @@ Persian typesetting in XeLaTeX]
 \keys_define:nn {fontspec-opentype}
   {
     Ligatures / PersianTeX .code:n = { \tl_set:Nn \l__fontspec_mapping_tl {persian-tex-text} },
+    Ligatures / PersianTeX .groups:n = {opentype},
     Ligatures / PersianTeXReset .code:n = { \tl_clear:N \l__fontspec_mapping_tl },
+    Ligatures / PersianTeXReset .groups:n = {opentype},
   }
 
 \keys_define:nn {fontspec-aat}
@@ -3569,7 +3577,7 @@ Persian typesetting in XeLaTeX]
     \exp_not:N \selectfont
    }
   }
-  \str_if_eq_x:nnT {\familydefault} {\rmdefault}
+  \str_if_eq:eeT {\familydefault} {\rmdefault}
     { \tl_set_eq:NN \encodingdefault \g__fontspec_nfss_enc_tl }
   \__xepersian_settextfont_hook:nn {#1} {#2}
   \normalfont
@@ -3643,7 +3651,7 @@ Persian typesetting in XeLaTeX]
     \exp_not:N \selectfont
    }
   }
-  \str_if_eq_x:nnT {\familydefault} {\rmdefault}
+  \str_if_eq:eeT {\familydefault} {\rmdefault}
     { \tl_set_eq:NN \encodingdefault \g__fontspec_nfss_enc_tl }
   \__xepersian_setlatintextfont_hook:nn {#1} {#2}
   \normalfont
@@ -3656,15 +3664,15 @@ Persian typesetting in XeLaTeX]
 
 \DeclareDocumentCommand \defpersianfont { m O{} m O{} }
   {
-    \__xepersian_main_defpersianfont:nnnN {#1} {#2,#4} {#3} 
+    \__xepersian_main_defpersianfont:NnnN #1 {#2,#4} {#3} 
     \NewDocumentCommand
   }
 \DeclareDocumentCommand \redefpersianfont { m O{} m O{} }
   {
-    \__xepersian_main_defpersianfont:nnnN {#1} {#2,#4} {#3} 
+    \__xepersian_main_defpersianfont:NnnN #1 {#2,#4} {#3} 
     \RenewDocumentCommand
   }
-\cs_new:Nn \__xepersian_main_defpersianfont:nnnN
+\cs_new:Nn \__xepersian_main_defpersianfont:NnnN
  {
   \fontspec_set_family:cnn { l__xepersian_ \cs_to_str:N #1 _family_tl } {Script=Persian,Ligatures=PersianTeX,#2} {#3}
   \use:x
@@ -3680,15 +3688,15 @@ Persian typesetting in XeLaTeX]
 
 \DeclareDocumentCommand \deflatinfont { m O{} m O{} }
   {
-    \__xepersian_main_deflatinfont:nnnN {#1} {#2,#4} {#3} 
+    \__xepersian_main_deflatinfont:NnnN #1 {#2,#4} {#3} 
     \NewDocumentCommand
   }
 \DeclareDocumentCommand \redeflatinfont { m O{} m O{} }
   {
-    \__xepersian_main_deflatinfont:nnnN {#1} {#2,#4} {#3} 
+    \__xepersian_main_deflatinfont:NnnN #1 {#2,#4} {#3} 
     \RenewDocumentCommand
   }
-\cs_new:Nn \__xepersian_main_deflatinfont:nnnN
+\cs_new:Nn \__xepersian_main_deflatinfont:NnnN
  {
   \fontspec_set_family:cnn { l__xepersian_ \cs_to_str:N #1 _family_tl } {Ligatures=TeX,#2} {#3}
   \use:x
@@ -3749,7 +3757,7 @@ Persian typesetting in XeLaTeX]
     \exp_not:N \selectfont
    }
   }
-  \str_if_eq_x:nnT {\familydefault} {\persiansfdefault}
+  \str_if_eq:eeT {\familydefault} {\persiansfdefault}
     { \tl_set_eq:NN \encodingdefault \g__fontspec_nfss_enc_tl }
   \__xepersian_setpersiansansfont_hook:nn {#1} {#2}
   \normalfont
@@ -3773,7 +3781,7 @@ Persian typesetting in XeLaTeX]
     \exp_not:N \selectfont
    }
   }
-  \str_if_eq_x:nnT {\familydefault} {\persianttdefault}
+  \str_if_eq:eeT {\familydefault} {\persianttdefault}
     { \tl_set_eq:NN \encodingdefault \g__fontspec_nfss_enc_tl }
   \__xepersian_setpersianmonofont_hook:nn {#1} {#2}
   \normalfont
@@ -3797,7 +3805,7 @@ Persian typesetting in XeLaTeX]
     \exp_not:N \selectfont
    }
   }
-  \str_if_eq_x:nnT {\familydefault} {\navardefault}
+  \str_if_eq:eeT {\familydefault} {\navardefault}
     { \tl_set_eq:NN \encodingdefault \g__fontspec_nfss_enc_tl }
   \__xepersian_setnavarfont_hook:nn {#1} {#2}
   \normalfont
@@ -3821,7 +3829,7 @@ Persian typesetting in XeLaTeX]
     \exp_not:N \selectfont
    }
   }
-  \str_if_eq_x:nnT {\familydefault} {\pookdefault}
+  \str_if_eq:eeT {\familydefault} {\pookdefault}
     { \tl_set_eq:NN \encodingdefault \g__fontspec_nfss_enc_tl }
   \__xepersian_setpookfont_hook:nn {#1} {#2}
   \normalfont
@@ -3845,7 +3853,7 @@ Persian typesetting in XeLaTeX]
     \exp_not:N \selectfont
    }
   }
-  \str_if_eq_x:nnT {\familydefault} {\sayehdefault}
+  \str_if_eq:eeT {\familydefault} {\sayehdefault}
     { \tl_set_eq:NN \encodingdefault \g__fontspec_nfss_enc_tl }
   \__xepersian_setsayehfont_hook:nn {#1} {#2}
   \normalfont
@@ -3869,7 +3877,7 @@ Persian typesetting in XeLaTeX]
     \exp_not:N \selectfont
    }
   }
-  \str_if_eq_x:nnT {\familydefault} {\iranicdefault}
+  \str_if_eq:eeT {\familydefault} {\iranicdefault}
     { \tl_set_eq:NN \encodingdefault \g__fontspec_nfss_enc_tl }
   \__xepersian_setiranicfont_hook:nn {#1} {#2}
   \normalfont
@@ -3918,10 +3926,24 @@ Persian typesetting in XeLaTeX]
 \bidi@newrobustcmd*{\rl}[1]{\RLE{\setpersianfont#1}}
 \def\latin{\LTR\LatinAlphs\@RTL@footnotefalse\resetlatinfont}
 \def\endlatin{\endLTR}
-\newenvironment{latin*}{\latin}{\endlatin\@endpetrue}
+\newenvironment{latin*}{\latin
+  \everypar{%
+    {\setbox\z@\lastbox
+      \ifvoid\z@
+        \kern-\parindent
+    \fi}%
+  }%
+}{\endlatin\@endpetrue}
 \def\persian{\RTL\PersianAlphs\@RTL@footnotetrue\setpersianfont}
 \def\endpersian{\endRTL}
-\newenvironment{persian*}{\persian}{\endpersian\@endpetrue}
+\newenvironment{persian*}{\persian
+  \everypar{%
+    {\setbox\z@\lastbox
+      \ifvoid\z@
+        \kern-\parindent
+    \fi}%
+  }%
+}{\endpersian\@endpetrue}
 \newenvironment{latinitems}{\begin{LTRitems}\LatinAlphs\@RTL@footnotefalse\resetlatinfont}{\end{LTRitems}}
 \newenvironment{persianitems}{\begin{RTLitems}\PersianAlphs\@RTL@footnotetrue\setpersianfont}{\end{RTLitems}}
 \let\originaltoday=\today
@@ -4274,7 +4296,7 @@ Persian typesetting in XeLaTeX]
 
 \newcommand*{\@xepersian@pdfcustomproperties}{%
   This is the xepersian package, Version \xepersian@version,
-  Released March 3, 2019. 
+  Released May 1, 2019. 
 }
 
 \newcommand\twocolumnstableofcontents{%
