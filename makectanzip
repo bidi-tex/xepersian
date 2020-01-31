@@ -2,9 +2,9 @@
 chmod -x img/*.jpg img/weather/*.jpg *.pdf *.ltx xepersian.dtx
 xelatex xepersian.dtx
 xelatex xepersian.dtx
+makeindex -s gind.ist -o xepersian.ind  xepersian.idx
+makeindex -s gglo.ist -o xepersian.gls  xepersian.glo
 xelatex xepersian.dtx
-makeindex -s gind.ist -o xepersian.ind  xepersian.idx}
-makeindex -s gglo.ist -o xepersian.gls  xepersian.glo}
 teckit_compile persian-tex-text.map
 teckit_compile persian-tex-text.map
 teckit_compile persian-tex-text.map
@@ -21,7 +21,7 @@ zip -r xepersian.tds.zip doc/xelatex/xepersian fonts/misc/xetex/fontmapping/xepe
 mv doc/xelatex/xepersian/*.pdf doc/xelatex/xepersian/*.py doc/xelatex/xepersian/README  doc/xelatex/xepersian/img source/xelatex/xepersian/*.ltx source/xelatex/xepersian/*.dtx source/xelatex/xepersian/*.ins  xepersian
 zip -r xepersian xepersian.tds.zip xepersian
 rm -r doc tex source fonts xepersian
-rm *.aux *.glo *.gls *.hd *.idx *.ilg *.ind *.log *.out *.toc xepersian.tds.zip
+rm *.aux  *.hd *.idx *.ilg *.ind *.log *.out *.toc xepersian.tds.zip
 
 
 
