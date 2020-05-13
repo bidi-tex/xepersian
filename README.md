@@ -1,29 +1,10 @@
 # xepersian
 Persian for LaTeX, using XeTeX
 
-## CTAN Package
- https://www.ctan.org/pkg/xepersian
+Vafa Khalighi asked for this repository to be set up while he was unable to support bidi but is now able to resume work on bidi and is using
 
+https://github.com/persiantex/xepersian
 
+This repository is currently archived and not taking new issues
 
-## Maintenance
-Vafa Khalighi, who was maintaining xepersian, handed maintenance to this bidi-tex
-GitHub Group (which initially consists of members of the LaTeX3 team).
-
-Issues may be entered here.
-
-The files here should match the files on CTAN:
-
-http://mirrors.ctan.org/macros/xetex/latex/xepersian.zip
-
-
-This git repository was originally cloned from:
-
-https://sourceforge.net/p/persian-tex-dist
-
-### Note
-
-Since handing over maintenance of these packages for personal reasons,
-Vafa Kahlighi has found time to make some further updates (via the
-persiantex github repository), changes made there will be merged
-back to this canonical source.
+See also https://ctan.org/pkg/xepersian-hm
